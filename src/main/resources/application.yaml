@@ -1,3 +1,16 @@
 spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/kotlin_demo
+    username: postgres
+    password: admin
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
   application:
     name: Interview
+
+  flyway:
+    enabled: true
