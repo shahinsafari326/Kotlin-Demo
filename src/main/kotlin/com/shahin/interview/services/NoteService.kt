@@ -35,7 +35,6 @@ class NoteService(private val noteRepository: NoteRepository) {
     fun updateNote(noteToSave: SaveNoteRequest, noteId: Long): Note {
         val note = noteRepository.findById(noteId).orElseThrow { NoteNotFoundException("Note not found") }
 
-        note.title = noteToSave.title
         note.content = noteToSave.content
 
         return noteRepository.save(note)

@@ -6,21 +6,27 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import jakarta.persistence.Version
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "notes")
+@Table(
+    name = "notes",
+    uniqueConstraints = [
+        UniqueConstraint(columnNames = ["title"])
+    ]
+)
 class Note(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @Column(nullable = false)
-    var title: String,
+    @Column(nullable = false, unique = true)
+    val title: String,
 
     @Column(nullable = false)
     var content: String,

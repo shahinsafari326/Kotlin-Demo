@@ -42,7 +42,7 @@ class NotesController (private val noteService: NoteService) {
         return ResponseEntity.status(HttpStatus.OK).body(noteList.content)
     }
 
-    @PutMapping("/{noteId}")
+    @PatchMapping("/{noteId}")
     fun updateNote(@Valid @RequestBody note: SaveNoteRequest, @PathVariable noteId: Long) : ResponseEntity<Note> {
         val updatedNote = noteService.updateNote(note, noteId)
         return ResponseEntity.status(HttpStatus.OK).body(updatedNote)
