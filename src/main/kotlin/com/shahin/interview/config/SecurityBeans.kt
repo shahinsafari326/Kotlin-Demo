@@ -23,8 +23,11 @@ class SecurityBeans {
         http
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.anyRequest().permitAll()
+                it.requestMatchers("/auth/**").permitAll()
+                it.requestMatchers("/notes/**").authenticated()
+                it.anyRequest().authenticated()
             }
+            .httpBasic { } // for now (simple testing)
 
         return http.build()
     }
