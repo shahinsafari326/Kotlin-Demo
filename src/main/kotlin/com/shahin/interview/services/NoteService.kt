@@ -5,10 +5,9 @@ import com.shahin.interview.dtos.SaveNoteRequest
 import com.shahin.interview.entities.Note
 import com.shahin.interview.repositories.NoteRepository
 import jakarta.transaction.Transactional
-import jakarta.validation.Valid
-import lombok.AllArgsConstructor
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.RequestBody
 
 @Service
 @Transactional
@@ -26,5 +25,9 @@ class NoteService(private val noteRepository: NoteRepository) {
             content = noteToSave.content,
         )
         return noteRepository.save(newNote)
+    }
+
+    fun getNotes(pageAble: PageRequest): Page<Note> {
+        return noteRepository.findAll(pageAble)
     }
 }

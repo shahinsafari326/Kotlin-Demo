@@ -5,11 +5,16 @@ import com.shahin.interview.entities.Note
 import com.shahin.interview.services.NoteService
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
-import org.hibernate.validator.constraints.URL
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.net.URI
 
@@ -24,4 +29,14 @@ class NotesController (private val noteService: NoteService) {
          val uri = URI.create("/notes/${savedNote.id}")
          return ResponseEntity.created(uri).body(savedNote)
      }
+
+    @GetMapping
+    fun getNotes(
+        @RequestParam (defaultValue = "0") page: Int,
+        @RequestParam (defaultValue = "2") size: Int) : ResponseEntity<List<Note>> {
+        val pageAble = PageRequest.of(page, size, Sort.Direction.DESC, "id")
+        val noteList = noteService.getNotes(pageAble)
+        return ResponseEntity.status(HttpStatus.OK).body(noteList.content)
+    }
+
 }
