@@ -1,8 +1,9 @@
 package com.shahin.interview.services
 
-import com.shahin.interview.NoteAlreadyExistException
+import com.shahin.interview.exceptions.NoteAlreadyExistException
 import com.shahin.interview.dtos.SaveNoteRequest
 import com.shahin.interview.entities.Note
+import com.shahin.interview.exceptions.NoteNotFoundException
 import com.shahin.interview.repositories.NoteRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Page
@@ -29,5 +30,14 @@ class NoteService(private val noteRepository: NoteRepository) {
 
     fun getNotes(pageAble: PageRequest): Page<Note> {
         return noteRepository.findAll(pageAble)
+    }
+
+    fun updateNote(noteToSave: SaveNoteRequest, noteId: Long): Note {
+        val note = noteRepository.findById(noteId).orElseThrow { NoteNotFoundException("Note not found") }
+
+        note.title = noteToSave.title
+        note.content = noteToSave.content
+
+        return noteRepository.save(note)
     }
 }

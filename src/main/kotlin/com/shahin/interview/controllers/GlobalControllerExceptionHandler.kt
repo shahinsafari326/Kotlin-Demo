@@ -1,6 +1,6 @@
 package com.shahin.interview.controllers
 
-import com.shahin.interview.NoteAlreadyExistException
+import com.shahin.interview.exceptions.NoteAlreadyExistException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException

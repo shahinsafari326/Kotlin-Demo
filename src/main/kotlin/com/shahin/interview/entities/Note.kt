@@ -20,7 +20,7 @@ class Note(
     val id: Long = 0,
 
     @Column(nullable = false)
-    val title: String,
+    var title: String,
 
     @Column(nullable = false)
     var content: String,
