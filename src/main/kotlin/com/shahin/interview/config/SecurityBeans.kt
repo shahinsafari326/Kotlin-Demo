@@ -1,5 +1,7 @@
 package com.shahin.interview.config
 
+import jakarta.validation.Valid
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -12,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 class SecurityBeans {
+
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
