@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
-class NotificationManager (@param:Qualifier("SMSNotificationService") private var notificationService: NotificationService) {
+class NotificationManager(
+    private val notificationServices: Map<String, NotificationService>, // sprin automatically creates this map
 
-    @Value("\${message-gateway}")
-    var messageGateway: String? = null
+    @param:Value("\${message-gateway:EmailNotificationService}") // default EmailNotificationService
+    private val provider: String
+) {
 
     fun sendNotification(message: String) {
-        print("Sending notification using $messageGateway")
-        notificationService.send(message)
-    }
+        val service = notificationServices[provider]
+            ?: throw IllegalArgumentException("Unknown provider: $provider")
 
+        service.send(message)
+    }
 }

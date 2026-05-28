@@ -15,4 +15,4 @@ spring:
   flyway:
     enabled: true
 
-message-gateway: SMS
+message-gateway: SMSNotificationService
